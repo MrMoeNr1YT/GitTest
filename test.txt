@@ -1,0 +1,35 @@
+#include <SoftwareSerial.h>
+
+
+#define rxPin 10
+#define txPin 11
+
+char zeichen = 0;
+
+// neuen SoftwareSerial
+SoftwareSerial mySerial (rxPin, txPin);
+
+void setup(){
+// Definieren
+pinMode(rxPin, INPUT);
+pinMode(txPin, OUTPUT);
+// Bautrate
+mySerial.begin(9600);
+Serial.begin(9600);
+}
+
+void loop() {
+
+  if (mySerial.available()) {
+    String receivedString = mySerial.readStringUntil('\n');
+    Serial.print("Chrisl: "); 
+    Serial.println(receivedString); 
+  }
+
+
+  if (Serial.available()) {
+    String message = Serial.readStringUntil('\n'); 
+    mySerial.print("Deniz: ");
+    mySerial.println(message); 
+  }
+}
